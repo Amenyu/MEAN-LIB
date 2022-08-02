@@ -3,17 +3,15 @@ const BookData = require('./src/model/Bookdata');
 const UserData = require('./src/model/Userdata');
 
 const path = require('path');
-app.use(express.static('./dist/frontend'));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname + '/dist/frontend/index.html'));
-   });
+
+const PORT = process.env.PORT || 8080;
    
-
 const cors = require('cors');
 var bodyparser=require('body-parser');
 const jwt = require('jsonwebtoken')
 var app = new express();
+app.use(express.static('./dist/frontend'));
 app.use(cors());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
@@ -153,8 +151,9 @@ app.delete('/api/remove/:id',(req,res)=>{
         });  
 });
      
-
-   const PORT = process.env.PORT || 8080;
+   app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/dist/frontend/index.html'));
+   });
 
 app.listen(PORT,()=>{
     console.log(`Server Ready on ${PORT}`);   
